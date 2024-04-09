@@ -1,51 +1,65 @@
- import br.com.baralho.model.Jogador;
+package br.com.baralho.services.impl;
+
+import br.com.baralho.exception.BadRequestException;
+import br.com.baralho.model.Jogador;
 import br.com.baralho.repository.JogadorRepository;
-import br.com.baralho.responses.ResponseJogador;
+import br.com.baralho.responses.ApiResponse;
 import br.com.baralho.services.JogadorService;
-import br.com.baralho.utils.StringUtils;
-import br.com.baralho.validates.JogadorValidate;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-private JogadorRepository jogadorRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@Slf4j
+
 @Service
-public static class JogadorServiceImpl implements JogadorService {
+public class JogadorServiceImpl implements JogadorService {
 
+    @Autowired
     private JogadorRepository jogadorRepository;
 
+
     @Override
-    public ResponseJogador createJogador(Jogador jogador) {
-
-        log.info("Criando um novo jogador");
-
-        ResponseJogador responseJogador = new ResponseJogador();
-        String errorsMsg = JogadorValidate.createValidate(jogador);
-
-        if(StringUtils.isNotNullAndNotEmpty(errorsMsg)) {
-            log.error(errorsMsg);
-            responseJogador.setErrorsMsg(errorsMsg);
-            responseJogador.setJogador(jogador);
-        } else {
-            try {
-                jogadorRepository.save(jogador);
-                responseJogador.setSuccessMsg("Novo Jogador criado com sucesso");
-                log.info("Novo cliente criado com sucesso");
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                responseJogador.setErrorsMsg(e.getMessage());
-            }
-
+    public Jogador addJogador(Jogador jogador) {
+        if (jogador.getNome() == null){
+            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
+            throw new BadRequestException(apiResponse);
         }
-        return responseJogador;
+        return jogadorRepository.save(jogador);
+    }
+
+    @Override
+    public ApiResponse deleteJogador(UUID id) {
+        if (!jogadorRepository.existsById(id)){
+            ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "Jogador Não deletado");
+            throw new BadRequestException(apiResponse);
+        } else {
+            jogadorRepository.deleteById(id);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Jogador> getAllJogadores() {
+        return jogadorRepository.findAll();
+    }
+
+    public Optional<Jogador> getJogadorById(UUID id) {
+
+        if (!jogadorRepository.existsById(id)){
+            ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "Jogador Não deletado");
+            throw new BadRequestException(apiResponse);
+        } else {
+            return jogadorRepository.findById(id);
+        }
     }
 
 }
 
-public void main() {
-}
+
+
 
 
 

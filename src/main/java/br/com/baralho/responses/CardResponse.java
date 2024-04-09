@@ -1,18 +1,16 @@
 package br.com.baralho.responses;
 
-import br.com.baralho.model.Jogador;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseJogador {
+public class CardResponse {
 
-    private UUID id;
-    private String nome;
+    private String code;
+    private String value;
+    private String suit;
+
 }
