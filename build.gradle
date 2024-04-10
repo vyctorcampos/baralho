@@ -37,6 +37,7 @@ dependencies {
 	implementation group: 'org.springframework', name: 'spring-beans', version: '6.0.11'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.1.0'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.16.1'
+	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
 }
 
 tasks.named('test') {

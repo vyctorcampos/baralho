@@ -23,7 +23,7 @@ public class JogadorServiceImpl implements JogadorService {
     @Override
     public Jogador addJogador(Jogador jogador) {
         if (jogador.getNome() == null){
-            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
+            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "O nome de usuário já está em uso");
             throw new BadRequestException(apiResponse);
         }
         return jogadorRepository.save(jogador);
@@ -32,7 +32,7 @@ public class JogadorServiceImpl implements JogadorService {
     @Override
     public ApiResponse deleteJogador(UUID id) {
         if (!jogadorRepository.existsById(id)){
-            ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "Jogador Não deletado");
+            ApiResponse apiResponse = new ApiResponse(Boolean.TRUE, "Não foi possivel deletar jogador.");
             throw new BadRequestException(apiResponse);
         } else {
             jogadorRepository.deleteById(id);

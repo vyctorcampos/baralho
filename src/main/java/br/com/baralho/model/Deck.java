@@ -17,4 +17,5 @@ public class Deck {
 
     @Column(name = "value_points")
     private String valuePoints;
+
 }

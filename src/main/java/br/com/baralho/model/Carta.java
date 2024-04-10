@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-@Entity
+
 public class Carta {
     @Id
     private UUID id;

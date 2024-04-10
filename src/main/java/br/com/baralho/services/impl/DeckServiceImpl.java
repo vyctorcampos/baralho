@@ -60,7 +60,6 @@ public class DeckServiceImpl implements DecKService {
 
             deckRepository.save(deck);
         }
-
         return cardsValueCount;
     }
 

@@ -3,6 +3,7 @@ package br.com.baralho.controllers.jogador;
 import br.com.baralho.client.DeckClient;
 import br.com.baralho.model.Deck;
 import br.com.baralho.model.Jogador;
+import br.com.baralho.repository.JogadorRepository;
 import br.com.baralho.responses.ApiResponse;
 import br.com.baralho.responses.DeckResponse;
 import br.com.baralho.responses.WrapperCardResponse;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +31,8 @@ public class JogadorController {
 
     @Autowired
     private DecKService decKService;
+    @Autowired
+    private JogadorRepository jogadorRepository;
 
 
     @PostMapping
@@ -46,25 +50,9 @@ public class JogadorController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listJogador() {
-        return ResponseEntity.ok("Lista de jogadores.");
+        List<Jogador> jogadores = jogadorRepository.findAll();
+        return ResponseEntity.ok(jogadores);
     }
 
-    @PostMapping("/{jogadorId}/deck/new")
-    public ResponseEntity<?> newDeck(@PathVariable(value = "jogadorId") UUID jogadorId) {
-        Optional<Jogador> jogador = jogadorService.getJogadorById(jogadorId);
-        DeckResponse deckResponse = deckClient.newDeck();
-
-        Deck deck = decKService.AddDeck(deckResponse, jogador);
-        return ResponseEntity.ok(deck);
-
-
-    }
-
-    @PostMapping("/deck/{deck_id}/sort")
-    public ResponseEntity<?> newDeck(@PathVariable String deck_id) {
-        WrapperCardResponse deckResponse = deckClient.drawCard(deck_id);
-        int valueDeck = decKService.ValuePointsDeck(deckResponse);
-        return ResponseEntity.ok(valueDeck);
-    }
 
 }
