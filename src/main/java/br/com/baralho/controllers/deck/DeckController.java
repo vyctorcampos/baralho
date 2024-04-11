@@ -8,11 +8,9 @@ import br.com.baralho.responses.WrapperCardResponse;
 import br.com.baralho.services.DecKService;
 import br.com.baralho.services.JogadorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -28,23 +26,28 @@ public class DeckController {
     private DeckClient deckClient;
 
     @Autowired
-    private DecKService decKService;
+    private DecKService deckService;
 
     @PostMapping("/{jogadorId}/deck/new")
     public ResponseEntity<?> newDeck(@PathVariable(value = "jogadorId") UUID jogadorId) {
         Optional<Jogador> jogador = jogadorService.getJogadorById(jogadorId);
         DeckResponse deckResponse = deckClient.newDeck();
 
-        Deck deck = decKService.AddDeck(deckResponse, jogador);
-        return ResponseEntity.ok(deck);
-
-
+        Deck deck = deckService.AddDeck(deckResponse, jogador);
+        return ResponseEntity.status(HttpStatus.CREATED).body(deck);
     }
 
     @PostMapping("/{deck_id}/sort")
     public ResponseEntity<?> newDeck(@PathVariable String deck_id) {
         WrapperCardResponse deckResponse = deckClient.drawCard(deck_id);
-        int valueDeck = decKService.ValuePointsDeck(deckResponse);
-        return ResponseEntity.ok(valueDeck);
+        int valueDeck = deckService.ValuePointsDeck(deckResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(valueDeck);
     }
+
+    @DeleteMapping("/{deckId}")
+    public ResponseEntity<?> deleteDeck(@PathVariable(value = "deckId") String deckId) {
+        deckService.deleteDeck(deckId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

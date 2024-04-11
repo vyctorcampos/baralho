@@ -27,13 +27,18 @@ public class DeckServiceImpl implements DecKService {
         return deckRepository.save(deck);
     }
 
+    @Override
+    public void deleteDeck(String id) {
+        Optional<Deck> deck = deckRepository.findById(id);
+        deckRepository.delete(deck.get());
+    }
+
     public int ValuePointsDeck(WrapperCardResponse wrapperCardResponse) {
         Optional<Deck> oldDeck = deckRepository.findById(wrapperCardResponse.getDeck_id());
         int cardsValueCount = 0;
         if (oldDeck.isPresent()) {
             Deck deck = oldDeck.get();
             List<CardResponse> cards = wrapperCardResponse.getCards();
-
 
             for (CardResponse cardResponse : cards) {
                 System.out.println(cardResponse.getValue());

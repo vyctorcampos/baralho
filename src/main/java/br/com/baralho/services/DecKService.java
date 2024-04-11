@@ -12,4 +12,6 @@ public interface DecKService {
     Deck AddDeck(DeckResponse deckResponse, Optional<Jogador> jogador);
 
     int ValuePointsDeck(WrapperCardResponse wrapperCardResponse);
+
+    void deleteDeck(String id);
 }
