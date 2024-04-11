@@ -1,9 +1,6 @@
 package br.com.baralho.controllers.jogador;
 
-import br.com.baralho.client.DeckClient;
 import br.com.baralho.model.Jogador;
-import br.com.baralho.repository.JogadorRepository;
-import br.com.baralho.services.DecKService;
 import br.com.baralho.services.JogadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,15 +18,6 @@ public class JogadorController {
     @Autowired
     private JogadorService jogadorService;
 
-    @Autowired
-    private DeckClient deckClient;
-
-    @Autowired
-    private DecKService decKService;
-
-    @Autowired
-    private JogadorRepository jogadorRepository;
-
 
     @PostMapping
     public ResponseEntity<Jogador> addJogador(@RequestBody Jogador jogador) {
@@ -46,7 +34,7 @@ public class JogadorController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listJogador() {
-        List<Jogador> jogadores = jogadorRepository.findAll();
+        List<Jogador> jogadores = jogadorService.getAllJogadores();
         return ResponseEntity.ok(jogadores);
     }
 
