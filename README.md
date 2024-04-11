@@ -30,6 +30,7 @@ Body: {name(String)}
 GET / : Lista todos os Jogadores registrado.
 
 DEL /{jogadorId}: Deleta um jogador selecionado por Id.
+Obs:Ao deletar jogador tambem é deletado o Deck relacionado ao jogador.
 
 # /deck
 
