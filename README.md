@@ -11,14 +11,15 @@ Esta API permite a criação de jogadores, distribuição de cartas e determina�
 * Jackson Annotations
 * Hibernate
 * H2
+* Feign
 
 ## -------------------------------DATABASE------------------------
 
 * # Configurações do Banco de Dados
-*spring.datasource.url=jdbc:postgresql://localhost:5432/postgres -> URL padrão
-*spring.datasource.username={UserName}
-*spring.datasource.password={Senha}
-*spring.datasource.driver-class-name=org.postgresql.Driver
+* spring.datasource.url=jdbc:postgresql://localhost:5432/postgres -> URL padrão
+* spring.datasource.username={UserName}
+* spring.datasource.password={Senha}
+* spring.datasource.driver-class-name=org.postgresql.Driver
 
 ## -------------------------------ENDPOINT-------------------------
 # /jogador
